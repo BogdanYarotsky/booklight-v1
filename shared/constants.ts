@@ -1,3 +1,3 @@
 export namespace Constants {
-    export const FOO = "foo";
+    export const APP_NAME = "Booklight";
 }
