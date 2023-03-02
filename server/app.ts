@@ -1,4 +1,6 @@
 import { Book } from "../shared/book";
+import { Constants } from "../shared/constants";
+
 
 const book: Book = {
     title: "test",
@@ -11,3 +13,4 @@ const book: Book = {
 };
 
 console.log(book);
+console.log(Constants.FOO);

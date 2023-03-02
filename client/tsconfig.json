@@ -1,8 +1,16 @@
 /* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
+  "references": [
+    {
+      "path": "../shared"
+    }
+  ],
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@shared/*": ["../shared/*"]
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
