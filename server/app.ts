@@ -13,4 +13,4 @@ const book: Book = {
 };
 
 console.log(book);
-console.log(Constants.FOO);
+console.log(Constants.APP_NAME);
