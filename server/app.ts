@@ -33,6 +33,7 @@ async function main() {
             const page = await browser.newPage();
             await page.goto('https://example.com/', { waitUntil: 'domcontentloaded' });
             const content = await page.content();
+            await page.close();
             res.send(content);
         } else {
             res.send(greeting);
