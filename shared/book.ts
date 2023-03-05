@@ -5,5 +5,5 @@ export default interface Book {
     rating: number;
     reviews: number;
     authors: string[];
-    year: number;
+    score: number;
 }
