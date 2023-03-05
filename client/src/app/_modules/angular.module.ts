@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
     exports: [
         BrowserModule,
         BrowserAnimationsModule,
-        HttpClientModule
+        HttpClientModule,
     ]
 })
 

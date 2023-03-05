@@ -1,16 +1,20 @@
 import { NgModule } from '@angular/core';
 
-import { MaterialModule } from './material.module';
+import { MaterialModule } from './_modules/material.module';
 import { AppRoutingModule } from './app-routing.module';
-import { AngularModule } from './angular.module';
+import { AngularModule } from './_modules/angular.module';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { SearchPageComponent } from './search-page/search-page.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
+    NavbarComponent,
+    SearchPageComponent,
+    SearchResultComponent
   ],
   imports: [
     AngularModule,
