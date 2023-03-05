@@ -1,18 +1,8 @@
-import Book from "../shared/book";
 import puppeteer from "puppeteer-core";
 import express from "express";
+import booklight from "./booklight";
 
 console.log('im running!')
-
-const book: Book = {
-    title: "test",
-    url: "test",
-    imageUrl: "test",
-    reviews: 500,
-    rating: 4.2,
-    authors: [],
-    year: 2009
-};
 
 async function main() {
     const browser = await puppeteer.launch({
