@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { Constants } from '@shared/constants';
-
 
 @Component({
   selector: 'app-navbar',
@@ -25,5 +23,5 @@ import { Constants } from '@shared/constants';
 })
 
 export class NavbarComponent {
-  title: string = Constants.APP_NAME;
+  title: string = "Booklight";
 }

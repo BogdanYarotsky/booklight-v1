@@ -40,6 +40,7 @@ export default class Goodreads implements BookSource {
         );
     }
 
+    // is there a way to do so for all pages?
     private async interceptUselessRequests(page: Page) {
         await page.setRequestInterception(true);
         page.on("request", r => {

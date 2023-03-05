@@ -2,53 +2,44 @@ import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import express from "express";
 import Goodreads from "./goodreads";
-
-console.log('im running!')
+import { Browser } from "puppeteer-core";
+import { CHROME_ARGS, DEBUG_PORT, DEBUG_CHROME_PATH, DOCKER_CHROME_PATH, NODE_EXIT_EVENTS } from "./constants"
 
 async function main() {
-    const browser = await puppeteer
-        .use(StealthPlugin())
-        .launch({
-            executablePath: process.env.IS_DOCKER ? '/usr/bin/google-chrome' : 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
-            args: ['--no-sandbox']
-        });
-
+    const browser = await startBrowser();
     const goodreads = new Goodreads(browser);
-
-    console.log("hello world!");
     const app = express();
-    const port = process.env.PORT || 8080;
-
-    app.get(["/", "/:name"], async (req, res) => {
-        const greeting = "<h1>Hello From Node!</h1>";
-        const name = req.params["name"];
-        if (name) {
-            const books = await goodreads.getBooks(name);
+    app.get("/", (_, res) => res.send("<h1>Welcome to Booklight</h1>"));
+    app.get("/api/search", async (req, res) => {
+        const query = req.query.q;
+        if (query) {
+            const books = await goodreads.getBooks(query as string);
             res.send(books);
-        } else {
-            res.send(greeting);
+        }
+        else {
+            res.redirect("/");
         }
     });
 
-    const server = app.listen(port);
-    console.log('started listening on port ' + port);
-    server.on("close", () => console.log("server has shut down"));
-
-    process.on('SIGINT', () => {
-        browser.close();
-        console.log("asked browser to stop");
-        server.close();
-    });
-    process.on('SIGTERM', () => {
-        browser.close();
-        console.log("asked browser to stop");
-        server.close();
-    });
+    const port = process.env.PORT || DEBUG_PORT;
+    const server = app.listen(port, () => console.log('started listening on port ' + port));
+    NODE_EXIT_EVENTS.forEach(event => {
+        process.on(event, () => {
+            browser.close();
+            server.close();
+            process.exit();
+        });
+    })
 }
 
 main().catch(console.error);
 
-
-
-
+async function startBrowser(): Promise<Browser> {
+    return await puppeteer
+        .use(StealthPlugin())
+        .launch({
+            executablePath: process.env.IS_DOCKER ? DOCKER_CHROME_PATH : DEBUG_CHROME_PATH,
+            args: CHROME_ARGS
+        });
+}
 
