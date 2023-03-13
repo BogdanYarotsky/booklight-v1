@@ -1,5 +1,26 @@
-#todo - split in two steps to remove TS files from the image
-FROM node:18.15.0-slim as build
+FROM node:18.15.0-slim as angular-build
+WORKDIR /app/client
+COPY client/package*.json ./
+RUN npm install
+COPY shared ./../shared
+COPY client ./
+RUN npm run release
+
+FROM node:18.15.0-slim as server-build
+WORKDIR /app/server
+COPY server/package*.json ./
+RUN npm install
+COPY shared ./../shared
+COPY server ./
+RUN npm run build
+
+FROM node:18.15.0-slim
+WORKDIR /app/server
+COPY --from=server-build /app/shared/*.js ./../shared/
+COPY --from=server-build /app/server/*.js ./
+COPY --from=server-build /app/server/package*.json ./
+COPY --from=angular-build /app/client/dist ./../client/dist
+RUN npm install --production
 
 ENV IS_DOCKER true
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
@@ -10,20 +31,5 @@ RUN apt-get update && apt-get install gnupg wget -y && \
     apt-get install google-chrome-stable -y --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
-#build front-end
-WORKDIR /app/client
-COPY client/package*.json ./
-RUN npm install
-COPY shared ./../shared
-COPY client ./
-RUN npm run release
-
-# build back-end
-WORKDIR /app/server
-COPY server/package*.json ./
-RUN npm install
-COPY shared ./../shared
-COPY server ./
-RUN npm run build
 EXPOSE 8080
 CMD ["npm", "run", "start"]
