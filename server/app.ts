@@ -12,7 +12,7 @@ async function main() {
     const app = express();
 
 
-    app.use('/', express.static('../client/dist/client'));
+    app.use('/', express.static('../client/dist'));
 
 
     app.get("/api/books", (_, res) => res.send("<h1>Welcome to Booklight</h1>"));

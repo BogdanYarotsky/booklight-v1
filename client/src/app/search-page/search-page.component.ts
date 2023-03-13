@@ -15,7 +15,8 @@ export class SearchPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: BooksService,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.route.queryParamMap.subscribe(params => {
@@ -28,5 +29,4 @@ export class SearchPageComponent implements OnInit {
       }
     });
   }
-
 }
