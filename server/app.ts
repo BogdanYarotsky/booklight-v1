@@ -10,7 +10,12 @@ async function main() {
     const browser = await startBrowser();
     const goodreads = new Goodreads(browser);
     const app = express();
-    app.get("/", (_, res) => res.send("<h1>Welcome to Booklight</h1>"));
+
+
+    app.use('/', express.static('../client/dist/client'));
+
+
+    app.get("/api/books", (_, res) => res.send("<h1>Welcome to Booklight</h1>"));
     app.get(SEARCH_ENDPOINT, async (req, res) => {
         const query = req.query.q;
         if (query) {
