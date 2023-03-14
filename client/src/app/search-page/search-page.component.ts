@@ -19,14 +19,14 @@ export class SearchPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.queryParamMap.subscribe(params => {
-      const query = params.get("q");
-      if (query) {
-        this.$books = this.service.getBooks();
-      }
-      else {
-        this.router.navigate(['/']);
-      }
-    });
+    // this.route.queryParamMap.subscribe(params => {
+    //   const query = params.get("q");
+    //   if (query) {
+    //     this.$books = this.service.getBooks();
+    //   }
+    //   else {
+    //     this.router.navigate(['/']);
+    //   }
+    // });
   }
 }

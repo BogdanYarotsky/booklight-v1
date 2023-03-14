@@ -15,13 +15,12 @@ COPY server ./
 RUN npm run build
 
 FROM zenika/alpine-chrome:with-node
-WORKDIR /app/server
-COPY --from=server-build /app/shared/*.js ./../shared/
-COPY --from=server-build /app/server/*.js ./
-COPY --from=server-build /app/server/package*.json ./
-COPY --from=angular-build /app/client/dist ./../client/dist
 USER root
+WORKDIR /app/server
+COPY --from=angular-build /app/client/dist ./../client/dist
+COPY --from=server-build /app/shared/*.js ./../shared/
+COPY --from=server-build /app/server/package*.json ./
+COPY --from=server-build /app/server/*.js ./
 RUN npm install --omit=dev
-ENV IS_DOCKER true
 EXPOSE 8080
 CMD ["npm", "run", "start"]
