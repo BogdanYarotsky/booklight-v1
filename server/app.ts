@@ -4,7 +4,7 @@ import express from "express";
 import Goodreads from "./goodreads";
 import { SEARCH_ENDPOINT } from "../shared/constants";
 import { Browser } from "puppeteer-core";
-import { CHROME_ARGS, DEBUG_PORT, DEBUG_CHROME_PATH, DOCKER_CHROME_PATH, NODE_EXIT_EVENTS } from "./config"
+import { CHROME_ARGS, DEBUG_PORT, DEBUG_CHROME_PATH, NODE_EXIT_EVENTS } from "./config"
 
 async function main() {
     const browser = await startBrowser();
@@ -44,7 +44,7 @@ async function startBrowser(): Promise<Browser> {
     return await puppeteer
         .use(StealthPlugin())
         .launch({
-            executablePath: process.env.IS_DOCKER ? DOCKER_CHROME_PATH : DEBUG_CHROME_PATH,
+            executablePath: process.env.IS_DOCKER ? process.env.CHROME_BIN : DEBUG_CHROME_PATH,
             args: CHROME_ARGS
         });
 }
