@@ -7,14 +7,14 @@ import { AngularModule } from './_modules/angular.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SearchPageComponent } from './search-page/search-page.component';
-import { SearchResultComponent } from './search-result/search-result.component';
+import { HomePageComponent } from './home-page/home-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     SearchPageComponent,
-    SearchResultComponent
+    HomePageComponent
   ],
   imports: [
     AngularModule,

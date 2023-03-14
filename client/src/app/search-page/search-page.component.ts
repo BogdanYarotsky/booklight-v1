@@ -11,6 +11,8 @@ import Book from '@shared/book';
 })
 export class SearchPageComponent implements OnInit {
   $books?: Observable<Book[]>;
+  title: string = '';
+
 
   constructor(
     private route: ActivatedRoute,
@@ -19,14 +21,15 @@ export class SearchPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    // this.route.queryParamMap.subscribe(params => {
-    //   const query = params.get("q");
-    //   if (query) {
-    //     this.$books = this.service.getBooks();
-    //   }
-    //   else {
-    //     this.router.navigate(['/']);
-    //   }
-    // });
+    this.route.queryParamMap.subscribe(params => {
+      const query = params.get("q");
+      if (query) {
+        this.title = query;
+        // this.$books = this.service.getBooks();
+      }
+      else {
+        this.router.navigate(['/']);
+      }
+    });
   }
 }
